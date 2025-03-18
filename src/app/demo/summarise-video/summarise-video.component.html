@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Hello">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate dignissimos nemo animi quisquam, fugit repellat velit? Doloremque
+        maxime eveniet autem repellendus officia est! Ex dolore, quae reprehenderit enim vel reiciendis?
+      </p>
+
+      <!-- Search Input and Button -->
+      <div class="d-flex align-items-center mt-3">
+        <input
+          type="text"
+          class="form-control me-2"
+          placeholder="Search video with title"
+          [(ngModel)]="searchQuery"
+        />
+        <button class="btn btn-primary" (click)="searchVideo()" [disabled]="!searchQuery.trim()">Search</button>
+      </div>
+
+      <!-- Summary Output -->
+      <div class="mt-3 p-3 border rounded bg-light">
+        <p *ngIf="videoSummary">{{ videoSummary }}</p>
+        <p *ngIf="!videoSummary">No summary available</p>
+      </div>
+
+      <!-- Text-to-Speech Controls -->
+      <div class="mt-3">
+        <button class="btn btn-success me-2" (click)="playSummary()">▶️ Play</button>
+        <button class="btn btn-warning me-2" (click)="pauseSummary()">⏸️ Pause</button>
+        <button class="btn btn-danger me-2" (click)="stopSummary()">⏹️ Stop</button>
+
+        <label class="ms-3 me-2">Vol: {{ volumeDisplay }}</label>
+        <input type="range" min="0" max="100" step="1" [(ngModel)]="volumeDisplay" (input)="adjustVolume()" />
+
+        <label class="ms-3 me-2">Voice:</label>
+        <select class="form-select w-auto d-inline-block" [(ngModel)]="selectedVoice" (change)="changeVoice()">
+          <option *ngFor="let voice of voices" [value]="voice.name">{{ voice.name }}</option>
+        </select>
+      </div>
+    </app-card>
+  </div>
+</div>
