@@ -11,13 +11,21 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
+      // {
+      //   path: '',
+      //   redirectTo: '/dashboard',
+      //   pathMatch: 'full'
+      // },
+      // {
+      //   path: '',
+      //   loadComponent: () => import('./demo/landing/landing.component').then((c) => c.DefaultComponent)
+      // },
       {
         path: '',
-        redirectTo: '/dashboard/default',
-        pathMatch: 'full'
+        loadComponent: () => import('./demo/landing/landing.component').then((c) => c.LandingPageComponent) //
       },
       {
-        path: 'dashboard/default',
+        path: 'dashboard',
         loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent)
       },
       {
