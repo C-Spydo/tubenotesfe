@@ -6,18 +6,20 @@ import { environment } from '../../../../../environments/environment';
 import { AuthService } from 'src/app/services/authService';
 import { showNotification } from 'src/app/demo/utils/notification';
 import { Router } from '@angular/router';
-
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-auth-login',
-  imports: [RouterModule],
+  imports: [RouterModule, FormsModule],
   templateUrl: './auth-login.component.html',
   styleUrl: './auth-login.component.scss'
 })
 export class AuthLoginComponent {
   constructor(private renderer: Renderer2, private authService: AuthService, private router:Router) {}
 
+  email: string = '';
+  password: string = '';
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -80,6 +82,35 @@ export class AuthLoginComponent {
     console.log(userData);
   
 
+  }
+
+
+  emailSignIn() {
+    if (!this.email || !this.password) {
+      showNotification(false, 'Please fill in all fields');
+      return;
+    }
+
+    this.authService.signInWithEmail({email:this.email, password:this.password}).subscribe({
+      next: (data) => {
+        console.log(data);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('id', data.id);
+        showNotification(true, 'Sign In successful');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error('Error adding prospect:', err);
+        showNotification(false, 'Failed to login');
+      }
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById('googleSignInBtn'),
+      { theme: 'outline', size: 'large' }
+    );
   }
 
   SignInOptions = [

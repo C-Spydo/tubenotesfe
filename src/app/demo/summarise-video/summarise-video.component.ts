@@ -2,7 +2,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// project import
+import { VideoService } from '../../services/videoService';
+import { showNotification } from '../utils/notification';
+
 
 import { CardComponent } from 'src/app/theme/shared/components/card/card.component';
 
@@ -13,8 +15,13 @@ import { CardComponent } from 'src/app/theme/shared/components/card/card.compone
   styleUrls: ['./summarise-video.component.scss']
 })
 export class SummariseVideoPageComponent {
+
+  constructor(private videoService: VideoService,) {}
+
   searchQuery: string = '';
-  videoSummary: string = 'This is a sample summary of the video...';
+  videoData: any = null;
+
+  videoSummary: string = '';
   speechSynthesis = window.speechSynthesis;
   utterance = new SpeechSynthesisUtterance();
   voices: SpeechSynthesisVoice[] = [];
@@ -22,6 +29,26 @@ export class SummariseVideoPageComponent {
   volume: number = 0.5;
   volumeDisplay: number = 50;
   isPaused: boolean = false;
+
+  // videoTitle = "Example Video Title";
+  // videoLink = "https://www.youtube.com/watch?v=EXAMPLE";
+  // videoViews = 1500;
+  // videoLength = "12:34";
+  publishedDate = "Feb 20, 2025";
+  // thumbnails = [
+  //   "https://example.com/thumbnail1.jpg",
+  //   "https://example.com/thumbnail2.jpg"
+  // ];
+
+animatedViews = 0;
+// keyThemes = [
+//   "Artificial Intelligence in Education",
+//   "The Future of Online Learning",
+//   "Impact of Technology on Teaching",
+//   "Student Engagement Strategies"
+// ];
+
+  showDetails = false;
 
   ngOnInit() {
     this.loadVoices();
@@ -45,8 +72,40 @@ export class SummariseVideoPageComponent {
   }
 
   searchVideo() {
-    this.videoSummary = `Summary for "${this.searchQuery}" goes here...`;
+    this.videoService.summariseVideo(this.searchQuery).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.videoData = data;
+        this.animatedViews = this.videoData.views;
+        console.log('Got the video data');
+        
+        this.videoSummary = this.videoData.summary;
+        showNotification(true,'Email generated successfully')
+        this.showDetails=true;
+      },
+      error: (err) => {
+        console.error('Error adding prospect:', err);
+        showNotification(false,'Failed to generate email')
+      }
+    });
+
     this.utterance.text = this.videoSummary;
+  }
+
+  animateViews() {
+    let start = 0;
+    let end = this.videoData.views || 0;
+    let duration = 2000; // 2 seconds
+    let stepTime = Math.abs(Math.floor(duration / end));
+
+    let counter = setInterval(() => {
+      if (start >= end) {
+        clearInterval(counter);
+      } else {
+        start += Math.ceil(end / 100); // Smooth increment
+        this.animatedViews = start;
+      }
+    }, stepTime);
   }
 
   playSummary() {

@@ -11,19 +11,19 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: '/dashboard',
-      //   pathMatch: 'full'
-      // },
+      {
+        path: '',
+        redirectTo: '/dashboard',
+        pathMatch: 'full'
+      },
       // {
       //   path: '',
       //   loadComponent: () => import('./demo/landing/landing.component').then((c) => c.DefaultComponent)
       // },
-      {
-        path: '',
-        loadComponent: () => import('./demo/landing/landing.component').then((c) => c.LandingPageComponent) //
-      },
+      // {
+      //   path: '',
+      //   loadComponent: () => import('./demo/landing/landing.component').then((c) => c.LandingPageComponent) //
+      // },
       {
         path: 'dashboard',
         loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent)
@@ -39,6 +39,10 @@ const routes: Routes = [
       {
         path: 'summarise-video',
         loadComponent: () => import('./demo/summarise-video/summarise-video.component').then((c) => c.SummariseVideoPageComponent)
+      },
+      {
+        path: 'summary-history',
+        loadComponent: () => import('./demo/summary-history/summary-history.component').then((c) => c.SummaryHistoryPageComponent)
       }
     ]
   },

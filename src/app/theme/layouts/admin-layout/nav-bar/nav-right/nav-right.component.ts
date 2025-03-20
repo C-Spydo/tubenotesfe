@@ -1,7 +1,7 @@
 // angular import
 import { Component, inject, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { Router } from '@angular/router';
 // project import
 
 // icon
@@ -42,7 +42,11 @@ export class NavRightComponent {
   windowWidth: number;
   screenFull: boolean = true;
 
-  constructor() {
+  name: string | null = '';
+  email: string | null = '';
+  payload: any = null;
+
+  constructor(private router: Router) {
     this.windowWidth = window.innerWidth;
     this.iconService.addIcon(
       ...[
@@ -67,6 +71,19 @@ export class NavRightComponent {
     );
   }
 
+  ngOnInit() {
+    this.name = localStorage.getItem('name');
+    this.email = localStorage.getItem('email');
+    this.payload = JSON.parse(localStorage.getItem('google_payload') || '{}');
+    console.log(this.payload.picture)
+  }
+
+  logout() {
+    localStorage.removeItem('token'); // Clear token
+    localStorage.removeItem('google_payload'); // Clear Google payload if stored
+    this.router.navigate(['/login']); // Redirect to login
+  }
+
   profile = [
     {
       icon: 'edit',
@@ -86,26 +103,4 @@ export class NavRightComponent {
     }
   ];
 
-  setting = [
-    {
-      icon: 'question-circle',
-      title: 'Support'
-    },
-    {
-      icon: 'user',
-      title: 'Account Settings'
-    },
-    {
-      icon: 'lock',
-      title: 'Privacy Center'
-    },
-    {
-      icon: 'comment',
-      title: 'Feedback'
-    },
-    {
-      icon: 'unordered-list',
-      title: 'History'
-    }
-  ];
 }

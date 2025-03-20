@@ -5,15 +5,13 @@ import { CommonModule } from '@angular/common';
 // project import
 import tableData from 'src/fake-data/default-data.json';
 
-import { MonthlyBarChartComponent } from 'src/app/theme/shared/apexchart/monthly-bar-chart/monthly-bar-chart.component';
-import { IncomeOverviewChartComponent } from 'src/app/theme/shared/apexchart/income-overview-chart/income-overview-chart.component';
-import { AnalyticsChartComponent } from 'src/app/theme/shared/apexchart/analytics-chart/analytics-chart.component';
-import { SalesReportChartComponent } from 'src/app/theme/shared/apexchart/sales-report-chart/sales-report-chart.component';
-
 // icons
 import { IconService, IconDirective } from '@ant-design/icons-angular';
 import { FallOutline, GiftOutline, MessageOutline, RiseOutline, SettingOutline } from '@ant-design/icons-angular/icons';
 import { CardComponent } from 'src/app/theme/shared/components/card/card.component';
+import { showNotification } from 'src/app/demo/utils/notification';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/authService';
 
 @Component({
   selector: 'app-default',
@@ -21,10 +19,6 @@ import { CardComponent } from 'src/app/theme/shared/components/card/card.compone
     CommonModule,
     CardComponent,
     IconDirective,
-    MonthlyBarChartComponent,
-    IncomeOverviewChartComponent,
-    AnalyticsChartComponent,
-    SalesReportChartComponent
   ],
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
@@ -32,9 +26,29 @@ import { CardComponent } from 'src/app/theme/shared/components/card/card.compone
 export class DefaultComponent {
   private iconService = inject(IconService);
 
-  // constructor
-  constructor() {
+  constructor(private authService: AuthService, private router:Router) {
     this.iconService.addIcon(...[RiseOutline, FallOutline, SettingOutline, GiftOutline, MessageOutline]);
+  }
+
+  stats: any = {};
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']); // Redirect to login if token is missing
+    }
+    this.getDashboard();
+  }
+  
+  getDashboard() {
+    this.authService.getDashboard().subscribe({
+      next: (data) => {
+        this.stats = data;
+        console.log(data)
+      },
+      error: (err) => {
+        console.error('Error fetching prospects:', err);
+      }
+    });
   }
 
   recentOrder = tableData;
@@ -70,16 +84,6 @@ export class DefaultComponent {
       color: 'text-warning',
       number: '1,943'
     },
-    {
-      title: 'Total Sales',
-      amount: '$35,078',
-      background: 'bg-light-warning ',
-      border: 'border-warning',
-      icon: 'fall',
-      percentage: '27.4%',
-      color: 'text-warning',
-      number: '$20,395'
-    }
   ];
 
   transaction = [
