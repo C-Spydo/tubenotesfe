@@ -20,7 +20,7 @@ export class AuthRegisterComponent {
   // public method
 
   signUp() {
-    if (!this.email || !this.password) {
+    if (!this.email || !this.name || !this.password) {
       showNotification(false, 'Please fill in all fields');
       return;
     }
@@ -31,8 +31,7 @@ export class AuthRegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.error('Error adding prospect:', err);
-        showNotification(false, 'Failed to login');
+        showNotification(false, 'Failed to Sign Up');
       }
     });
   }
