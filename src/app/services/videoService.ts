@@ -15,7 +15,7 @@ export class VideoService {
   constructor(private http: HttpClient) {}
 
   fetchSummaryHistory(): Observable<any> {
-    return this.http.get<{ data: any }>(`${this.apiUrl}/emails`).pipe(
+    return this.http.get<{ data: any }>(`${this.apiUrl}/history`).pipe(
       map((response) => response.data)
     );
   }
@@ -24,20 +24,13 @@ export class VideoService {
     return this.http.get<any>('assets/video-test.json');
   }
 
-  // summariseVideo(title: string): Observable<any> {
+  summariseVideox(title: string): Observable<any> {
 
-  //   // return this.http.get<{ data: any }>(`${this.apiUrl}/emails/generate/${prospect_id}`).pipe(
-  //   //   map((response) => response.data)
-  //   // );
+    return this.http.get<{ data: any }>(`${this.apiUrl}/emails/generate/${title}`).pipe(
+      map((response) => response.data)
+    );
     
-  // }
+  }
 
-  // generateMail(prospect_id: number): Observable<any> {
-  //   return this.http.post<{ data: any }>(`${this.baseUrl}/emails/generate`, { prospect_id }).pipe(
-  //     map(response => response.data) 
-  //   );
-  // }
-
-  
 
 }

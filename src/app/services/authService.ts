@@ -25,6 +25,12 @@ export class AuthService {
     );
   }
 
+  signUpWithEmail(userData): Observable<any> {
+    return this.http.post<{ data: any }>(`${this.baseUrl}/api/register`, userData).pipe(
+      map(response => response.data) 
+    );
+  }
+
   getDashboard(): Observable<any> {
     return this.http.get<{ data: any }>(`${this.baseUrl}/dashboard`).pipe(
       map((response) => response.data)
