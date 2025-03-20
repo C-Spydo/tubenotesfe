@@ -72,9 +72,9 @@ export class NavRightComponent {
   }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
-    this.payload = JSON.parse(localStorage.getItem('google_payload') || '{}');
+    this.name = localStorage.getItem('tubenotes_name');
+    this.email = localStorage.getItem('tubenotes_email');
+    this.payload = JSON.parse(localStorage.getItem('tubenotes_google_payload') || '{}');
     console.log(this.payload.picture)
   }
 

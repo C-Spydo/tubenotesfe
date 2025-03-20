@@ -22,7 +22,7 @@ export class AuthLoginComponent {
   password: string = '';
 
   ngOnInit() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('tubenotes_token');
     if (token) {
       this.router.navigate(['/dashboard']); // Redirect to dashboard
     }
@@ -57,7 +57,7 @@ export class AuthLoginComponent {
     // Decode the JWT token to get user details
     const payload = JSON.parse(atob(token.split('.')[1]));
     console.log(payload);
-    localStorage.setItem('google_payload', JSON.stringify(payload));
+    localStorage.setItem('tubenotes_google_payload', JSON.stringify(payload));
     const userData = {
       name: payload.name,
       email: payload.email,
@@ -67,10 +67,10 @@ export class AuthLoginComponent {
     this.authService.signIn(userData).subscribe({
       next: (data) => {
         console.log(data);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('name', data.name);
-        localStorage.setItem('email', data.email);
-        localStorage.setItem('id', data.id);
+        localStorage.setItem('tubenotes_token', data.token);
+        localStorage.setItem('tubenotes_name', data.name);
+        localStorage.setItem('tubenotes_email', data.email);
+        localStorage.setItem('tubenotes_id', data.id);
         showNotification(true, 'Sign In successful');
         this.router.navigate(['/dashboard']);
       },
@@ -94,10 +94,10 @@ export class AuthLoginComponent {
     this.authService.signInWithEmail({email:this.email, password:this.password}).subscribe({
       next: (data) => {
         console.log(data);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('name', data.name);
-        localStorage.setItem('email', data.email);
-        localStorage.setItem('id', data.id);
+        localStorage.setItem('tubenotes_token', data.token);
+        localStorage.setItem('tubenotes_name', data.name);
+        localStorage.setItem('tubenotes_email', data.email);
+        localStorage.setItem('tubenotes_id', data.id);
         showNotification(true, 'Sign In successful');
         this.router.navigate(['/dashboard']);
       },
@@ -106,11 +106,6 @@ export class AuthLoginComponent {
         showNotification(false, 'Failed to login');
       }
     });
-
-    google.accounts.id.renderButton(
-      document.getElementById('googleSignInBtn'),
-      { theme: 'outline', size: 'large' }
-    );
   }
 
   SignInOptions = [

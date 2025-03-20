@@ -14,7 +14,7 @@
               <th>Title</th>
               <th>Link</th>
               <th>Length</th>
-              <th>Published On</th>
+              <th>Published Date</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -22,12 +22,15 @@
             <tr *ngFor="let summary of summaries; let i = index">
               <td>{{ i + 1 }}</td>
               <td>{{ summary.title }}</td>
-              <td>{{ summary.link }}</td>
-              <td>{{ summary.published_on | date: 'MMM d, y h:mm a' }}</td>
+              <td>{{ summary.metadata.link }}</td>
+              <td>{{ summary.metadata.length }}</td>
+              <td>{{ summary.metadata.published_date }}</td>
               <td>
-                <a (click)="openSummaryDetails(summary)" class="me-2 text-primary" title="View">
-                  <i class="ti ti-eye"></i>
-                </a>
+                <!-- View Link -->
+                <a (click)="openSummaryDetails(summary)" class="me-2 text-primary" title="View">View</a>
+              
+                <!-- Delete Link -->
+                <a (click)="deleteSummary(summary)" class="text-danger" title="Delete">Delete</a>
               </td>
             </tr>
           </tbody>

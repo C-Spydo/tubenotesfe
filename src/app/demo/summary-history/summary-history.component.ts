@@ -5,6 +5,7 @@ import { VideoService } from '../../services/videoService';
 // Project Import
 import { CardComponent } from '../../theme/shared/components/card/card.component';
 import { showNotification } from '../utils/notification';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'summary-history',
@@ -22,7 +23,7 @@ export class SummaryHistoryPageComponent {
   
 
 
-  constructor(private videoService: VideoService) {}
+  constructor(private videoService: VideoService, private router:Router) {}
 
   ngOnInit() {
     this.loadSummaries();
@@ -31,8 +32,8 @@ export class SummaryHistoryPageComponent {
   loadSummaries() {
     this.videoService.fetchSummaryHistory().subscribe({
       next: (data) => {
-        this.summaries = data.emails;
-        console.log(this.summaries);
+        this.summaries = data.notebooks;
+        console.log(data);
       },
       error: (err) => {
         console.error('Error fetching prospects:', err);
@@ -64,8 +65,12 @@ export class SummaryHistoryPageComponent {
       this.sortAsc = true;
     }
   }
+  openSummaryDetails(summary: any) {
+    localStorage.setItem('tubenotes_selectedSummary', JSON.stringify(summary));
+    this.router.navigate(['/summary-details']);
+  }
 
-  openSummaryDetails(summary){
+  deleteSummary(summary){
 
   }
 

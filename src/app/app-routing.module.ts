@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: 'summary-history',
         loadComponent: () => import('./demo/summary-history/summary-history.component').then((c) => c.SummaryHistoryPageComponent)
+      },
+      {
+        path: 'summary-details',
+        loadComponent: () => import('./demo/summary-details/summary-details.component').then((c) => c.SummaryDetailsPageComponent)
       }
     ]
   },

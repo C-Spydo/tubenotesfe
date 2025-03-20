@@ -15,18 +15,19 @@ export class VideoService {
   constructor(private http: HttpClient) {}
 
   fetchSummaryHistory(): Observable<any> {
-    return this.http.get<{ data: any }>(`${this.apiUrl}/history`).pipe(
+    let user_id = localStorage.getItem('tubenotes_id');
+    return this.http.get<{ data: any }>(`${this.apiUrl}users/${user_id}/notes`).pipe(
       map((response) => response.data)
     );
   }
 
-  summariseVideo(searchQuery: string): Observable<any> {
-    return this.http.get<any>('assets/video-test.json');
-  }
+  // summariseVideo(searchQuery: string): Observable<any> {
+  //   return this.http.get<any>('assets/video-test.json');
+  // }
 
-  summariseVideox(title: string): Observable<any> {
-
-    return this.http.get<{ data: any }>(`${this.apiUrl}/emails/generate/${title}`).pipe(
+  summariseVideo(title: string): Observable<any> {
+    let user_id = localStorage.getItem('tubenotes_id');
+    return this.http.get<{ data: any }>(`${this.apiUrl}/notes?query=${title}&user_id=${user_id}`).pipe(
       map((response) => response.data)
     );
     

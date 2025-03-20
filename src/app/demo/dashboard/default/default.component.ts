@@ -32,11 +32,11 @@ export class DefaultComponent {
 
   stats: any = {};
   ngOnInit() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('tubenotes_token');
     if (!token) {
       this.router.navigate(['/login']); // Redirect to login if token is missing
     }
-    this.getDashboard();
+    // this.getDashboard();
   }
   
   getDashboard() {

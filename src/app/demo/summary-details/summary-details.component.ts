@@ -11,15 +11,15 @@ import { CardComponent } from 'src/app/theme/shared/components/card/card.compone
 @Component({
   selector: 'app-sample-page',
   imports: [CommonModule, CardComponent, FormsModule,],
-  templateUrl: './summarise-video.component.html',
-  styleUrls: ['./summarise-video.component.scss']
+  templateUrl: './summary-details.component.html',
+  styleUrls: ['./summary-details.component.scss']
 })
-export class SummariseVideoPageComponent {
+export class SummaryDetailsPageComponent {
 
   constructor(private videoService: VideoService,) {}
 
-  searchQuery: string = '';
   videoData: any = null;
+  data: any = null;
 
   videoSummary: string = '';
   speechSynthesis = window.speechSynthesis;
@@ -34,12 +34,16 @@ export class SummariseVideoPageComponent {
 
 animatedViews = 0;
 
-  showDetails = false;
-
   ngOnInit() {
     this.loadVoices();
     this.utterance.text = this.videoSummary;
     this.utterance.volume = this.volume;
+    this.data = JSON.parse(localStorage.getItem('tubenotes_selectedSummary'));
+    this.videoData = this.data.metadata;
+    this.animatedViews = this.videoData.views;
+    console.log('Got the video data');
+    
+    this.videoSummary = this.data.note;
   }
 
   loadVoices() {
@@ -57,26 +61,6 @@ animatedViews = 0;
     };
   }
 
-  searchVideo() {
-    this.videoService.summariseVideo(this.searchQuery).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.videoData = data.metadata;
-        this.animatedViews = this.videoData.views;
-        console.log('Got the video data');
-        
-        this.videoSummary = data.response;
-        showNotification(true,'Summary generated successfully')
-        this.showDetails=true;
-      },
-      error: (err) => {
-        console.error('Error adding prospect:', err);
-        showNotification(false,'Failed to generate summary')
-      }
-    });
-
-    this.utterance.text = this.videoSummary;
-  }
 
   animateViews() {
     let start = 0;
