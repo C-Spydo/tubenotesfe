@@ -79,8 +79,8 @@ export class NavRightComponent {
   }
 
   logout() {
-    localStorage.removeItem('token'); // Clear token
-    localStorage.removeItem('google_payload'); // Clear Google payload if stored
+    localStorage.removeItem('tubenotes_token'); // Clear token
+    localStorage.removeItem('tubenotes_google_payload'); // Clear Google payload if stored
     this.router.navigate(['/login']); // Redirect to login
   }
 

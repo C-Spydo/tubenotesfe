@@ -31,6 +31,7 @@ export class DefaultComponent {
   }
 
   stats: any = {};
+  total_summary = localStorage.getItem('tubenotes_total_summary');
   ngOnInit() {
     const token = localStorage.getItem('tubenotes_token');
     if (!token) {
@@ -51,65 +52,20 @@ export class DefaultComponent {
     });
   }
 
+  
   recentOrder = tableData;
 
   AnalyticEcommerce = [
     {
-      title: 'Total Page Views',
-      amount: '4,42,236',
+      title: 'Total Summaries',
+      amount: this.total_summary,
       background: 'bg-light-primary ',
       border: 'border-primary',
       icon: 'rise',
-      percentage: '59.3%',
+      percentage: '-',
       color: 'text-primary',
-      number: '35,000'
-    },
-    {
-      title: 'Total Users',
-      amount: '78,250',
-      background: 'bg-light-primary ',
-      border: 'border-primary',
-      icon: 'rise',
-      percentage: '70.5%',
-      color: 'text-primary',
-      number: '8,900'
-    },
-    {
-      title: 'Total Order',
-      amount: '18,800',
-      background: 'bg-light-warning ',
-      border: 'border-warning',
-      icon: 'fall',
-      percentage: '27.4%',
-      color: 'text-warning',
-      number: '1,943'
+      number: this.total_summary,
     },
   ];
 
-  transaction = [
-    {
-      background: 'text-success bg-light-success',
-      icon: 'gift',
-      title: 'Order #002434',
-      time: 'Today, 2:00 AM',
-      amount: '+ $1,430',
-      percentage: '78%'
-    },
-    {
-      background: 'text-primary bg-light-primary',
-      icon: 'message',
-      title: 'Order #984947',
-      time: '5 August, 1:45 PM',
-      amount: '- $302',
-      percentage: '8%'
-    },
-    {
-      background: 'text-danger bg-light-danger',
-      icon: 'setting',
-      title: 'Order #988784',
-      time: '7 hours ago',
-      amount: '- $682',
-      percentage: '16%'
-    }
-  ];
 }

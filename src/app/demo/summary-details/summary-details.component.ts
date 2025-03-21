@@ -1,9 +1,11 @@
 // angular import
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VideoService } from '../../services/videoService';
 import { showNotification } from '../utils/notification';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 
 import { CardComponent } from 'src/app/theme/shared/components/card/card.component';
@@ -31,6 +33,9 @@ export class SummaryDetailsPageComponent {
   isPaused: boolean = false;
 
   publishedDate = "";
+
+  @ViewChild('pdfContent', { static: false }) pdfContent!: ElementRef;
+
 
 animatedViews = 0;
 
@@ -109,5 +114,19 @@ animatedViews = 0;
 
   changeVoice() {
     this.utterance.voice = this.voices.find(v => v.name === this.selectedVoice) || this.utterance.voice;
+  }
+
+  downloadPDF() {
+    const content = this.pdfContent.nativeElement;
+
+    html2canvas(content, { scale: 2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('summary.pdf');
+    });
   }
 }

@@ -71,6 +71,7 @@ export class AuthLoginComponent {
         localStorage.setItem('tubenotes_name', data.name);
         localStorage.setItem('tubenotes_email', data.email);
         localStorage.setItem('tubenotes_id', data.id);
+        localStorage.setItem('tubenotes_total_summary', data.notebooks.length);
         showNotification(true, 'Sign In successful');
         this.router.navigate(['/dashboard']);
       },

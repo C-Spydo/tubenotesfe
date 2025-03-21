@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" #pdfContent>
   <div class="col-sm-12">
     <app-card cardTitle="Summary Details">
       <div *ngIf="videoData">
@@ -63,6 +63,8 @@
           <select class="form-select w-auto d-inline-block" [(ngModel)]="selectedVoice" (change)="changeVoice()">
             <option *ngFor="let voice of voices" [value]="voice.name">{{ voice.name }}</option>
           </select>
+
+          <button (click)="downloadPDF()" class="btn btn-primary mt-3">Download as PDF</button>
         </div>
     </div>
     </app-card>
