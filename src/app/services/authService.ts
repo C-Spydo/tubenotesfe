@@ -32,7 +32,8 @@ export class AuthService {
   }
 
   getDashboard(): Observable<any> {
-    return this.http.get<{ data: any }>(`${this.baseUrl}/dashboard`).pipe(
+    let user_id = localStorage.getItem('tubenotes_id');
+    return this.http.get<{ data: any }>(`${this.baseUrl}/dashboard/${user_id}`).pipe(
       map((response) => response.data)
     );
   }

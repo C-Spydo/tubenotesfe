@@ -31,20 +31,20 @@ export class DefaultComponent {
   }
 
   stats: any = {};
-  total_summary = localStorage.getItem('tubenotes_total_summary');
+  // total_summary = localStorage.getItem('tubenotes_total_summary');
+  total_summary = 0;
   ngOnInit() {
     const token = localStorage.getItem('tubenotes_token');
     if (!token) {
       this.router.navigate(['/login']); // Redirect to login if token is missing
     }
-    // this.getDashboard();
+    this.getDashboard();
   }
   
   getDashboard() {
     this.authService.getDashboard().subscribe({
       next: (data) => {
-        this.stats = data;
-        console.log(data)
+        this.total_summary = data.total_summaries
       },
       error: (err) => {
         console.error('Error fetching prospects:', err);

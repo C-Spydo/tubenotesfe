@@ -30,7 +30,12 @@ export class VideoService {
     return this.http.get<{ data: any }>(`${this.apiUrl}/notes?query=${title}&user_id=${user_id}`).pipe(
       map((response) => response.data)
     );
-    
+  }
+
+  deleteSummary(id: number): Observable<any> {
+    return this.http.delete<{ data: any }>(`${this.apiUrl}/notes/${id}`).pipe(
+      map((response) => response.data)
+    );
   }
 
 

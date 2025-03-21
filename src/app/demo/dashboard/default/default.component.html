@@ -4,7 +4,7 @@
       <app-card [showHeader]="false" blockClass="dashboard-card">
         <h6 class="mb-2 f-w-400 text-muted">{{ analytic.title }}</h6>
         <h4 class="mb-3">
-          {{ analytic.amount }}
+          {{ total_summary }}
           <span class="badge {{ analytic.background }} border {{ analytic.border }} ">
             <i antIcon type="{{ analytic.icon }}" theme="outline"></i>
             {{ analytic.percentage }}
@@ -12,7 +12,7 @@
         </h4>
         <p class="mb-0 text-muted text-sm">
           You have requested for 
-          <span class="{{ analytic.color }}">{{ analytic.number }}</span>
+          <span class="{{ analytic.color }}">{{ total_summary }}</span>
           so far
         </p>
       </app-card>
