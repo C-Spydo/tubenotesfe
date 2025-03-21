@@ -70,8 +70,7 @@ animatedViews = 0;
         this.showDetails=true;
       },
       error: (err) => {
-        console.error('Error adding prospect:', err);
-        showNotification(false,'Failed to generate summary')
+        showNotification(false,'The sytem is unable to generate summary, at this time, Please try again later')
       }
     });
 
