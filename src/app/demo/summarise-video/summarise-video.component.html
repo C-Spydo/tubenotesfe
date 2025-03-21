@@ -49,11 +49,8 @@
         
           <!-- Key Themes Section -->
           <div class="mt-3">
-            <h5>Key Themes</h5>
-            <ul *ngIf="videoData?.key_themes?.length">
-              <li *ngFor="let theme of videoData.key_themes">{{ theme }}</li>
-            </ul>
-            <p *ngIf="!videoData?.key_themes?.length">No key themes available.</p>
+            <h5>Sentiment</h5>
+            <p>{{videoData.sentiment.explanation}}</p>
           </div>
         
           <!-- Summary Output -->
