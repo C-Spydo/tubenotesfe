@@ -71,7 +71,16 @@ export class SummaryHistoryPageComponent {
   }
 
   deleteSummary(summary){
-
+    this.videoService.deleteSummary(summary.id).subscribe({
+      next: (data) => {
+        showNotification(true,"Summary deleted")
+        this.loadSummaries();
+      },
+      error: (err) => {
+        showNotification(false,"Unabled to delete summary")
+        console.error('Error fetching prospects:', err);
+      }
+    });
   }
 
   selectedSummary: any = null;
